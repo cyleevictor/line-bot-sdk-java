@@ -15,7 +15,7 @@
 
 
 line.bot:
-  channel-token: '1541234451'
+  channel-token: 'qNpdT8PlktB7hW008Dp2cY2bv4yW1k0svIrAg2Lprut8V3w86/chTWWve1P2RYIChUQoQHNpEEBnNbFePbYGMoGv/Bvtimv3jszcQlWSNYtnktBznoDpLHGmr2H5MhRujNJVzz0DY2aA5qHgNEVoewdB04t89/1O/w1cDnyilFU='
   channel-secret: 'f9a29dcb09e32d4e44b79ab39f5c0510'
   handler.path: /callback
 
