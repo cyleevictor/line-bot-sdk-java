@@ -2,7 +2,13 @@
 
 ## What is this?
 
-This is a full-featured sample application for the LINE Messaging API.
+This is a POC program based on the sample from Line sample-spring-boot-kitchensink
+
+An Service is added to query for fxquote from this URL: http://fixer.io
+
+To start with, type "fxquote" and send to the line bot. An ButtonTemple will be shown which allow you to select currency pairs
+
+For instance, to quote "USD/JPY", a request will be send using "http://api.fixer.io/latest?base=USD"
 
 ## Usage
 
