@@ -178,13 +178,14 @@ public class KitchenSinkController {
     public void handlePostbackEvent(PostbackEvent event) {
         String replyToken = event.getReplyToken();
         log.info("DEBUG!!!: " + event.getPostbackContent());
-//        this.replyText(replyToken, "Got postback data " + event.getPostbackContent().getData() + ", param " + event.getPostbackContent().getParams());
 
-        handlePostBackContent(event.getReplyToken(), event.getPostbackContent());
+        String reply = handlePostBackContent(event.getReplyToken(), event.getPostbackContent());
+//        this.replyText(replyToken, "Got postback data " + event.getPostbackContent().getData() + ", param " + event.getPostbackContent().getParams());
+        this.replyText(replyToken, reply);
 
     }
 
-    private void handlePostBackContent(String replyToken, PostbackContent postbackContent) {
+    private String handlePostBackContent(String replyToken, PostbackContent postbackContent) {
         String data = postbackContent.getData();
         log.info("Received fxquote post back:" + data);
         if (data.startsWith("fxquote")) {
@@ -195,11 +196,9 @@ public class KitchenSinkController {
 
             log.info("DEBUG: rate:" + rate);
 
-            String reply = "quote: " + baseCcy + counterCcy + ": " + rate;
-
-            this.replyText(replyToken, reply);
+            return "quote: " + baseCcy + counterCcy + ": " + rate;
         }
-
+        return "quote: N/A";
     }
 
     @EventMapping
