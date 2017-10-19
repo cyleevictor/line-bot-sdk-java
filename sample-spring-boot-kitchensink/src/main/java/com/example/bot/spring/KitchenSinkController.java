@@ -178,7 +178,7 @@ public class KitchenSinkController {
     public void handlePostbackEvent(PostbackEvent event) {
         String replyToken = event.getReplyToken();
         log.info("DEBUG!!!: " + event.getPostbackContent());
-        this.replyText(replyToken, "Got postback data " + event.getPostbackContent().getData() + ", param " + event.getPostbackContent().getParams().toString());
+        this.replyText(replyToken, "Got postback data " + event.getPostbackContent().getData() + ", param " + event.getPostbackContent().getParams());
 
         handlePostBackContent(event.getReplyToken(), event.getPostbackContent());
 
