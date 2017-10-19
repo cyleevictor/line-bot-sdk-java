@@ -29,7 +29,9 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import com.example.bot.fx.ExternalWevServiceForwarder;
 import com.linecorp.bot.model.action.DatetimePickerAction;
+import com.linecorp.bot.model.event.postback.PostbackContent;
 import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -84,6 +86,9 @@ import lombok.extern.slf4j.Slf4j;
 public class KitchenSinkController {
     @Autowired
     private LineMessagingClient lineMessagingClient;
+
+    @Autowired
+    private ExternalWevServiceForwarder webServiceForwarder;
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -175,6 +180,27 @@ public class KitchenSinkController {
     public void handlePostbackEvent(PostbackEvent event) {
         String replyToken = event.getReplyToken();
         this.replyText(replyToken, "Got postback data " + event.getPostbackContent().getData() + ", param " + event.getPostbackContent().getParams().toString());
+
+        handlePostBackContent(event.getReplyToken(), event.getPostbackContent());
+
+    }
+
+    private void handlePostBackContent(String replyToken, PostbackContent postbackContent) {
+        String data = postbackContent.getData();
+        log.info("Received fxquote post back:" + data);
+        if (data.startsWith("fxQuote")) {
+            String baseCcy = data.split("=")[1].substring(0, 2);
+            String counterCcy = data.split("=")[1].substring(3, 5);
+
+            double rate = webServiceForwarder.getQuote(baseCcy, counterCcy);
+            String reply = "quote: " + baseCcy + counterCcy + ": " + rate;
+
+            this.replyText(
+                    replyToken,
+                    reply
+            );
+        }
+
     }
 
     @EventMapping
@@ -408,6 +434,21 @@ public class KitchenSinkController {
                                 )
                         )
                 ));
+                break;
+            case "fxquote":
+                String imageUrl = createUri("/static/buttons/fxquote_banner.jpg");
+                ButtonsTemplate buttonsTemplate = new ButtonsTemplate(
+                        imageUrl,
+                        "Fx Quote",
+                        "Quote a Fx price!",
+                        Arrays.asList(
+                                new PostbackAction("USD/JPY",
+                                        "fxquote=USDJPY"),
+                                new PostbackAction("USD/HKD",
+                                        "fxquote=USDHKD")
+                        ));
+                TemplateMessage templateMessage = new TemplateMessage("Button alt text", buttonsTemplate);
+                this.reply(replyToken, templateMessage);
                 break;
             default:
                 log.info("Returns echo message {}: {}", replyToken, text);
