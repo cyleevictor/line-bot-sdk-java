@@ -177,6 +177,7 @@ public class KitchenSinkController {
     @EventMapping
     public void handlePostbackEvent(PostbackEvent event) {
         String replyToken = event.getReplyToken();
+        log.info("DEBUG!!!: " + event.getPostbackContent());
         this.replyText(replyToken, "Got postback data " + event.getPostbackContent().getData() + ", param " + event.getPostbackContent().getParams().toString());
 
         handlePostBackContent(event.getReplyToken(), event.getPostbackContent());
@@ -441,9 +442,11 @@ public class KitchenSinkController {
                         "Quote a Fx price!",
                         Arrays.asList(
                                 new PostbackAction("USD/JPY",
+                                        "fxquote=USDJPY",
                                         "fxquote=USDJPY"),
                                 new PostbackAction("USD/HKD",
-                                        "fxquote=USDHKD")
+                                        "fxquote=USDHKD",
+                                        "fxquote=USDJPY")
                         ));
                 TemplateMessage templateMessage = new TemplateMessage("Button alt text", buttonsTemplate);
                 this.reply(replyToken, templateMessage);
