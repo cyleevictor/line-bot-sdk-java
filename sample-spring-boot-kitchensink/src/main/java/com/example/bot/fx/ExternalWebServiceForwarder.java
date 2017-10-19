@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
-public class ExternalWevServiceForwarder {
+public class ExternalWebServiceForwarder {
 
     public double getQuote(String baseCcy, String counterCcy) {
         RestTemplate restTemplate = new RestTemplate();

@@ -29,7 +29,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
-import com.example.bot.fx.ExternalWevServiceForwarder;
+import com.example.bot.fx.ExternalWebServiceForwarder;
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.event.postback.PostbackContent;
 import com.linecorp.bot.model.message.template.*;
@@ -86,9 +86,7 @@ import lombok.extern.slf4j.Slf4j;
 public class KitchenSinkController {
     @Autowired
     private LineMessagingClient lineMessagingClient;
-
-    @Autowired
-    private ExternalWevServiceForwarder webServiceForwarder;
+    private ExternalWebServiceForwarder webServiceForwarder = new ExternalWebServiceForwarder();
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
