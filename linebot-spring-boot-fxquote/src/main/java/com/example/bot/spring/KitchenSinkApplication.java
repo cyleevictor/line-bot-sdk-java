@@ -1,8 +1,3 @@
-include 'line-bot-api-client'
-include 'line-bot-model'
-include 'line-bot-servlet'
-include 'line-bot-spring-boot'
-
 /*
  * Copyright 2016 LINE Corporation
  *
@@ -19,8 +14,22 @@ include 'line-bot-spring-boot'
  * under the License.
  */
 
-// samples
-include 'sample-spring-boot-kitchensink'
-include 'sample-spring-boot-echo'
-include 'linebot-spring-boot-fxquote'
+package com.example.bot.spring;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class KitchenSinkApplication {
+    static Path downloadedContentDir;
+
+    public static void main(String[] args) throws IOException {
+        downloadedContentDir = Files.createTempDirectory("line-bot");
+        SpringApplication.run(KitchenSinkApplication.class, args);
+    }
+
+}
