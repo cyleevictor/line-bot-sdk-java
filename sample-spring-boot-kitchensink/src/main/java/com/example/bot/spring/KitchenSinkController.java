@@ -188,8 +188,8 @@ public class KitchenSinkController {
         String data = postbackContent.getData();
         log.info("Received fxquote post back:" + data);
         if (data.startsWith("fxquote")) {
-            String baseCcy = data.split("=")[1].substring(0, 2);
-            String counterCcy = data.split("=")[1].substring(3, 5);
+            String baseCcy = data.split("=")[1].substring(0, 3);
+            String counterCcy = data.split("=")[1].substring(3, 6);
 
             double rate = webServiceForwarder.getQuote(baseCcy, counterCcy);
 
@@ -446,7 +446,7 @@ public class KitchenSinkController {
                                         "fxquote=USDJPY"),
                                 new PostbackAction("USD/HKD",
                                         "fxquote=USDHKD",
-                                        "fxquote=USDJPY")
+                                        "fxquote=USDHKD")
                         ));
                 TemplateMessage templateMessage = new TemplateMessage("Button alt text", buttonsTemplate);
                 this.reply(replyToken, templateMessage);
