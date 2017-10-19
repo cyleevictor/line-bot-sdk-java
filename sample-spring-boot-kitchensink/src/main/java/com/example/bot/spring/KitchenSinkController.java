@@ -191,7 +191,11 @@ public class KitchenSinkController {
             String baseCcy = data.split("=")[1].substring(0, 2);
             String counterCcy = data.split("=")[1].substring(3, 5);
 
+
             double rate = webServiceForwarder.getQuote(baseCcy, counterCcy);
+
+            log.info("DEBUG: rate:" + rate);
+
             String reply = "quote: " + baseCcy + counterCcy + ": " + rate;
 
             this.replyText(

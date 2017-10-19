@@ -8,9 +8,11 @@ public class ExternalWebServiceForwarder {
 
     public double getQuote(String baseCcy, String counterCcy) {
         RestTemplate restTemplate = new RestTemplate();
+        log.info("url: " + "http://api.fixer.io/latest?base=" + baseCcy);
+        //
         FxQuote quote = restTemplate.getForObject("http://api.fixer.io/latest?base=" + baseCcy, FxQuote.class);
 
-        log.info(quote.toString());
+        log.info("DEBUG: print quote:" + quote.toString());
         log.info(String.valueOf(quote.getRate(counterCcy)));
         return quote.getRate(counterCcy);
     }
