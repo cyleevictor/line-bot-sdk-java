@@ -187,7 +187,7 @@ public class KitchenSinkController {
     private void handlePostBackContent(String replyToken, PostbackContent postbackContent) {
         String data = postbackContent.getData();
         log.info("Received fxquote post back:" + data);
-        if (data.startsWith("fxQuote")) {
+        if (data.startsWith("fxquote")) {
             String baseCcy = data.split("=")[1].substring(0, 2);
             String counterCcy = data.split("=")[1].substring(3, 5);
 
